@@ -1,4 +1,4 @@
 package com.pointofsale.model;
 
-public class Produto {
+public class Product {
 }
