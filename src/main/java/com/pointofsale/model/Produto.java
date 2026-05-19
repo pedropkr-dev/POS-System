@@ -1,17 +1,17 @@
 package com.pointofsale.model;
 
-public class Product {
-    private String name;
-    private int value;
+public class Produto {
+    private String nome;
+    private int valor;
     private int id;
-    private String linkImage;
+    private String linkImagem;
 
     public String getName() {
-        return name;
+        return nome;
     }
 
     public int getValue() {
-        return value;
+        return valor;
     }
 
     public int getId() {
@@ -19,6 +19,6 @@ public class Product {
     }
 
     public String getLinkImage() {
-        return linkImage;
+        return linkImagem;
     }
 }
