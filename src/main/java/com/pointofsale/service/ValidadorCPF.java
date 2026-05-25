@@ -14,6 +14,11 @@ public class ValidadorCPF {
     public static boolean validar(long CPF) {
         while (true) {
             String cpfStr = Long.toString(CPF);
+
+            while (cpfStr.length() < 11) {
+                cpfStr = "0" + cpfStr;
+            }
+
             int digitoUmSoma = 0;
             int jUm = 10;
             int digitoDoisSoma = 0;
@@ -47,7 +52,11 @@ public class ValidadorCPF {
                 digitoUmSoma += digito1 * jUm;
             }
 
-            float restoDigitoUm = (digitoUmSoma * 10) % 11;
+            float restoDigitoUm = 11 - (digitoUmSoma  % 11);
+
+            if (restoDigitoUm >= 10) {
+                restoDigitoUm = 0;
+            }
 
             if (restoDigitoUm == Character.getNumericValue(cpfStr.charAt(9))) {
             }
@@ -61,7 +70,11 @@ public class ValidadorCPF {
                 digitoDoisSoma += digito2 * jDois;
             }
 
-            float restoDigitoDois = (digitoDoisSoma * 10) % 11;
+            float restoDigitoDois = 11 - (digitoDoisSoma  % 11);
+
+            if (restoDigitoDois >= 10) {
+                restoDigitoDois = 0;
+            }
 
             if (restoDigitoDois == Character.getNumericValue(cpfStr.charAt(10))) {
             }
