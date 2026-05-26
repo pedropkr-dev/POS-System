@@ -6,6 +6,13 @@ public class Produto {
     private int id;
     private String linkImagem;
 
+    public Produto(String nome, int valor, int id, String linkImagem) {
+        this.nome = nome;
+        this.valor = valor;
+        this.id = id;
+        this.linkImagem = linkImagem;
+    }
+
     public String getName() {
         return nome;
     }
