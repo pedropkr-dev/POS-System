@@ -82,6 +82,9 @@ public class Venda {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-
-
+    
+    @Override
+    public String toString() {
+        return "Venda - Cpf: " + (cliente != null ? cliente.getCPF() : "?") + " - Total: " + total;
+    }
 }
