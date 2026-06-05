@@ -19,8 +19,12 @@ public class ProdutoVenda {
         this.valorUnitario = produto.getValor();
     }
 
+
+    //Metodo valorUnitario * quantidade
     public BigDecimal getSubtotal(){
         if (valorUnitario == null) {
+
+
             return BigDecimal.ZERO;
         }
         return valorUnitario.multiply(BigDecimal.valueOf(quantidade));
