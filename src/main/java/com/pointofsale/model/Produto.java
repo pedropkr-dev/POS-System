@@ -1,13 +1,13 @@
 package com.pointofsale.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class Produto {
     private String codigoBarras;
     private String nome;
     private BigDecimal valor;
-    private int id;
     private String linkImagem;
 
     //Esse construtor vazio é para a Biblioteca Jackson conseguir ler do JSON.
@@ -15,11 +15,10 @@ public class Produto {
 
     }
 
-    public Produto(String codigoBarras, String nome, BigDecimal valor, int id, String linkImagem) {
+    public Produto(String codigoBarras, String nome, BigDecimal valor, String linkImagem) {
         this.codigoBarras = codigoBarras;
         this.nome = nome;
         this.valor = valor;
-        this.id = id;
         this.linkImagem = linkImagem;
     }
 
@@ -40,20 +39,13 @@ public class Produto {
     }
 
     public BigDecimal getValor() {
-        return valor;
+        return valor.setScale(2, RoundingMode.HALF_UP);
     }
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getLinkImagem() {
         return linkImagem;

@@ -3,47 +3,31 @@ package com.pointofsale.model;
 import java.math.BigDecimal;
 
 public class ProdutoVenda {
-    private String codigoBarras;
-    private String nome;
+
+    private Produto produto;
     private int quantidade;
-    private BigDecimal valorUnitario;
 
     public ProdutoVenda(){
-
     }
 
     public ProdutoVenda(Produto produto, int quantidade) {
-        this.codigoBarras = produto.getCodigoBarras();
-        this.nome = produto.getNome();
+        this.produto = produto;
         this.quantidade = quantidade;
-        this.valorUnitario = produto.getValor();
     }
 
-
-    //Metodo valorUnitario * quantidade
     public BigDecimal getSubtotal(){
-        if (valorUnitario == null) {
-
-
+        if (produto == null || produto.getValor() == null) {
             return BigDecimal.ZERO;
         }
-        return valorUnitario.multiply(BigDecimal.valueOf(quantidade));
+        return produto.getValor().multiply(BigDecimal.valueOf(quantidade));
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public int getQuantidade() {
@@ -54,16 +38,11 @@ public class ProdutoVenda {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getValorUnitario() {
-        return valorUnitario;
-    }
-
-    public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorUnitario = valorUnitario;
-    }
-
     @Override
     public String toString() {
-        return quantidade + "x " + nome + " @ " + valorUnitario;
+        if (produto != null) {
+            return quantidade + "x " + produto.getNome() + " @ " + produto.getValor();
+        }
+        return "Item vazio";
     }
 }

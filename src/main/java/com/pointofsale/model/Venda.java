@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Venda {
+    private long idVenda;
     private Cliente cliente;
     private String formaPagamento;
     private List<ProdutoVenda> listaDeProdutos;
@@ -41,6 +42,14 @@ public class Venda {
             soma = soma.add(item.getSubtotal());
         }
         this.total = soma;
+    }
+
+    public long getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(long idVenda) {
+        this.idVenda = idVenda;
     }
 
     public Cliente getCliente() {
