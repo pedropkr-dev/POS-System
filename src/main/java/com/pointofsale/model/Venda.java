@@ -24,6 +24,15 @@ public class Venda {
         this.dataHora = LocalDateTime.now();
     }
 
+    public Venda(long idVenda, Cliente cliente, String formaPagamento,List<ProdutoVenda> listaDeProdutos, LocalDateTime dataHora, BigDecimal total) {
+        this.cliente = cliente;
+        this.formaPagamento = formaPagamento;
+        this.listaDeProdutos = listaDeProdutos;
+        this.dataHora = dataHora;
+        this.total = total;
+        this.idVenda = idVenda;
+    }
+
     //gereciamento dos itens
 
     public void adicionarProduto(ProdutoVenda item){
