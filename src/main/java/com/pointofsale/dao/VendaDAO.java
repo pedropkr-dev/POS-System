@@ -29,7 +29,7 @@ public class VendaDAO {
             itensFormatados += "]";
 
             String linhaCSV = venda.getIdVenda() + ";" +
-                    venda.getCliente().getCPF() + ";" +
+                    venda.getCliente().getCpf() + ";" +
                     venda.getDataHora().toString() + ";" +
                     venda.getFormaPagamento() + ";" +
                     venda.getTotal().toString() + ";" +
@@ -46,6 +46,7 @@ public class VendaDAO {
         List<Venda> historicoVendas = new ArrayList<>();
 
         try {
+            // Leitura de Alta Velocidade (NIO.2)
             List<String> linhas = Files.readAllLines(Paths.get("dados/venda.csv"));
 
             for (String linha : linhas) {
@@ -62,6 +63,7 @@ public class VendaDAO {
                 BigDecimal total = new BigDecimal(fatias[4]);
                 String itensFormatados = fatias[5];
 
+                // Busca o cliente cruzando com o ClienteDAO
                 Cliente cliente = ClienteDAO.buscarPorCpf(cpfCliente);
 
                 List<ProdutoVenda> listaDeProdutos = new ArrayList<>();
@@ -75,12 +77,12 @@ public class VendaDAO {
                         if (itemStr.trim().isEmpty()) continue;
 
                         String[] dadosItem = itemStr.split("-");
-                        String codigoBarras = dadosItem;
-                        int quantidade = Integer.parseInt(dadosItem[5]);
+
+                        String codigoBarras = dadosItem[0];
+                        int quantidade = Integer.parseInt(dadosItem[1]);
 
                         Produto produtoOriginal = ProdutoDAO.buscarPorCodigo(codigoBarras);
 
-                        // Com o produto e a quantidade em mãos, recriamos a linha da nota fiscal
                         ProdutoVenda produtoVenda = new ProdutoVenda(produtoOriginal, quantidade);
                         listaDeProdutos.add(produtoVenda);
                     }
@@ -96,5 +98,17 @@ public class VendaDAO {
         }
 
         return historicoVendas;
+    }
+
+    public static long gerarProximoId() {
+        List<Venda> historico = listarVendas();
+
+        if (historico.isEmpty()) {
+            return 1;
+        }
+
+        Venda ultimaVenda = historico.get(historico.size() - 1);
+
+        return ultimaVenda.getIdVenda() + 1;
     }
 }

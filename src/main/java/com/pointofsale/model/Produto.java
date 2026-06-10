@@ -10,11 +10,6 @@ public class Produto {
     private BigDecimal valor;
     private String linkImagem;
 
-    //Esse construtor vazio é para a Biblioteca Jackson conseguir ler do JSON.
-    public Produto(){
-
-    }
-
     public Produto(String codigoBarras, String nome, BigDecimal valor, String linkImagem) {
         this.codigoBarras = codigoBarras;
         this.nome = nome;

@@ -13,15 +13,9 @@ public class Venda {
     private LocalDateTime dataHora;
     private BigDecimal total;
 
-    public Venda() {
+    public Venda(long idVenda, Cliente cliente, String formaPagamento, List<ProdutoVenda> listaDeProdutos, LocalDateTime dataHora, BigDecimal total) {
         this.listaDeProdutos = new ArrayList<>();
         this.total = BigDecimal.ZERO;
-    }
-
-    public Venda(Cliente cliente) {
-        this();
-        this.cliente = cliente;
-        this.dataHora = LocalDateTime.now();
     }
 
     //gereciamento dos itens
@@ -94,6 +88,6 @@ public class Venda {
     
     @Override
     public String toString() {
-        return "Venda - Cpf: " + (cliente != null ? cliente.getCPF() : "?") + " - Total: " + total;
+        return "Venda - Cpf: " + (cliente != null ? cliente.getCpf() : "?") + " - Total: " + total;
     }
 }
