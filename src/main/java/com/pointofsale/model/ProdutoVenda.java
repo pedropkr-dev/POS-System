@@ -7,9 +7,6 @@ public class ProdutoVenda {
     private Produto produto;
     private int quantidade;
 
-    public ProdutoVenda(){
-    }
-
     public ProdutoVenda(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
