@@ -12,6 +12,7 @@ public class ProdutoVenda {
         this.quantidade = quantidade;
     }
 
+
     public BigDecimal getSubtotal(){
         if (produto == null || produto.getValor() == null) {
             return BigDecimal.ZERO;
@@ -35,11 +36,4 @@ public class ProdutoVenda {
         this.quantidade = quantidade;
     }
 
-    @Override
-    public String toString() {
-        if (produto != null) {
-            return quantidade + "x " + produto.getNome() + " @ " + produto.getValor();
-        }
-        return "Item vazio";
-    }
 }
