@@ -19,7 +19,7 @@ public class ClienteDAO {
 
             String linhasCSV = cliente.getId_cliente() + ";" +
                                cliente.getCpf() + "\n";
-
+                writer.write(linhasCSV);
         } catch (IOException e){
             System.out.println("Erro. Não foi possível acessar o cliente.");
             e.printStackTrace();

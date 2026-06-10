@@ -13,9 +13,16 @@ public class Venda {
     private LocalDateTime dataHora;
     private BigDecimal total;
 
-    public Venda(long idVenda, Cliente cliente, String formaPagamento, List<ProdutoVenda> listaDeProdutos, LocalDateTime dataHora, BigDecimal total) {
+
+    public Venda(long idVenda, Cliente cliente, String formaPagamento,List<ProdutoVenda> listaDeProdutos, LocalDateTime dataHora, BigDecimal total) {
         this.listaDeProdutos = new ArrayList<>();
         this.total = BigDecimal.ZERO;
+        this.cliente = cliente;
+        this.formaPagamento = formaPagamento;
+        this.listaDeProdutos = listaDeProdutos;
+        this.dataHora = dataHora;
+        this.total = total;
+        this.idVenda = idVenda;
     }
 
     //gereciamento dos itens
@@ -25,7 +32,7 @@ public class Venda {
         recalcularTotal();
     }
 
-    public void removerProduoto(ProdutoVenda item){
+    public void removerProduto(ProdutoVenda item){
         this.listaDeProdutos.remove(item);
         recalcularTotal();
     }
