@@ -103,6 +103,6 @@ public class Venda {
     
     @Override
     public String toString() {
-        return "Venda - Cpf: " + (cliente != null ? cliente.getCPF() : "?") + " - Total: " + total;
+        return "Venda - Cpf: " + (cliente != null ? cliente.getCpf() : "?") + " - Total: " + total;
     }
 }

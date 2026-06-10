@@ -1,4 +1,7 @@
 package com.pointofsale.view;
 
-public class MainScreen {
+import javax.swing.*;
+
+public class MainScreen extends JFrame {
+
 }

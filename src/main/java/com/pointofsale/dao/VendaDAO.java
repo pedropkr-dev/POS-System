@@ -29,7 +29,7 @@ public class VendaDAO {
             itensFormatados += "]";
 
             String linhaCSV = venda.getIdVenda() + ";" +
-                    venda.getCliente().getCPF() + ";" +
+                    venda.getCliente().getCpf() + ";" +
                     venda.getDataHora().toString() + ";" +
                     venda.getFormaPagamento() + ";" +
                     venda.getTotal().toString() + ";" +
@@ -75,7 +75,7 @@ public class VendaDAO {
                         if (itemStr.trim().isEmpty()) continue;
 
                         String[] dadosItem = itemStr.split("-");
-                        String codigoBarras = dadosItem;
+                        String codigoBarras = dadosItem[0];
                         int quantidade = Integer.parseInt(dadosItem[5]);
 
                         Produto produtoOriginal = ProdutoDAO.buscarPorCodigo(codigoBarras);
