@@ -17,9 +17,9 @@ public class MainScreen extends JFrame {
         painel.setLayout(null);
         add(painel);
 
-        JLabel titulo = new JLabel("Frente de Loja");
+        JLabel titulo = new JLabel("Loja de Andinho e Pedinho");
 
-        titulo.setBounds(160, 30, 200, 30);
+        titulo.setBounds(120, 30, 200, 30);
         painel.add(titulo);
 
 

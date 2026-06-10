@@ -50,26 +50,4 @@ public class Produto {
         this.linkImagem = linkImagem;
     }
 
-
-    //Essa sobreescrita abaixo, ela é para que dois produtos com o mesmo código de barras, sejam considerados iguais.
-    @Override
-    public boolean equals(Object o){
-        if (this == o) return true;
-        if (!(o instanceof Produto)) return false;
-        Produto outro = (Produto) o; //cast
-        return Objects.equals(codigoBarras,outro.codigoBarras);
-    }
-    /*
-    Essa sobreescrita abaixo tem que ser feita porque acima eu fiz o equals comparar pelo codigoBarras.
-    Então o hashcode tbm precisa ser calculado a partir do codigobarras, Dessa maneira, dois produtos com o mesmo codigo de barras terão o mesmo hashcode.
-    */
-    @Override
-    public int hashCode(){
-        return Objects.hash(codigoBarras);
-    }
-    // E essa daqui é simplismente para definir o que aparece quando a gente tentar imprimir ou transformar o objeto em texto.
-    @Override
-    public String toString() {
-        return nome + "(" + codigoBarras + ")";
-    }
 }
