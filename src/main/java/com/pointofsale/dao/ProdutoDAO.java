@@ -64,4 +64,16 @@ public class ProdutoDAO {
 
         return catalogo;
     }
+
+    public static Produto buscarPorCodigo(String codigoBuscado) {
+        List<Produto> catalogo = listarProdutos();
+
+        for (Produto p : catalogo) {
+            if (p.getCodigoBarras().equals(codigoBuscado)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
 }
