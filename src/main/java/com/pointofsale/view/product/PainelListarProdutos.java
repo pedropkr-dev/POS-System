@@ -18,7 +18,6 @@ public class PainelListarProdutos extends JPanel {
     private JLabel labelImagem;
     private TelaPrincipal principal;
 
-
     private List<Produto> produtos;
 
     public PainelListarProdutos(TelaPrincipal principal) {
@@ -41,10 +40,8 @@ public class PainelListarProdutos extends JPanel {
 
         tabela = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabela);
-
         scroll.setBounds(20, 45, 420, 380);
         add(scroll);
-
 
         JLabel tituloImagem = new JLabel("Imagem do produto:");
         tituloImagem.setBounds(460, 45, 180, 25);
@@ -52,27 +49,29 @@ public class PainelListarProdutos extends JPanel {
 
         labelImagem = new JLabel();
         labelImagem.setBounds(460, 75, 180, 180);
-
         labelImagem.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         labelImagem.setHorizontalAlignment(SwingConstants.CENTER);
         labelImagem.setText("(selecione um produto)");
         add(labelImagem);
 
-
         tabela.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-
             if (!e.getValueIsAdjusting()) {
                 mostrarImagemSelecionada();
             }
         });
 
         JButton botaoNovo = new JButton("Novo Produto");
-        botaoNovo.setBounds(20, 440, 140, 35);
+        botaoNovo.setBounds(20, 440, 120, 35);
         add(botaoNovo);
         botaoNovo.addActionListener(e -> principal.mostrarTela("CADASTRO_PRODUTO"));
 
+        JButton botaoAlterar = new JButton("Alterar");
+        botaoAlterar.setBounds(150, 440, 120, 35);
+        add(botaoAlterar);
+        botaoAlterar.addActionListener(e -> alterarProduto());
+
         JButton botaoAtualizar = new JButton("Atualizar");
-        botaoAtualizar.setBounds(170, 440, 120, 35);
+        botaoAtualizar.setBounds(280, 440, 120, 35);
         add(botaoAtualizar);
         botaoAtualizar.addActionListener(e -> recarregar());
 
@@ -96,11 +95,19 @@ public class PainelListarProdutos extends JPanel {
             });
         }
 
-
         labelImagem.setIcon(null);
         labelImagem.setText("(selecione um produto)");
     }
 
+    private void alterarProduto() {
+        int linhaSelecionada = tabela.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um produto na tabela para alterar.");
+            return;
+        }
+        Produto produtoSelecionado = produtos.get(linhaSelecionada);
+        principal.mostrarTelaCadastroProduto(produtoSelecionado);
+    }
 
     private void mostrarImagemSelecionada() {
         int linha = tabela.getSelectedRow();
@@ -111,13 +118,11 @@ public class PainelListarProdutos extends JPanel {
         Produto produto = produtos.get(linha);
         String nomeImagem = produto.getLinkImagem();
 
-
         if (nomeImagem == null || nomeImagem.trim().isEmpty()) {
             labelImagem.setIcon(null);
             labelImagem.setText("(sem imagem)");
             return;
         }
-
 
         File arquivo = new File("dados/imagens/" + nomeImagem);
         if (!arquivo.exists()) {
@@ -125,7 +130,6 @@ public class PainelListarProdutos extends JPanel {
             labelImagem.setText("(imagem não encontrada)");
             return;
         }
-
 
         ImageIcon iconOriginal = new ImageIcon(arquivo.getAbsolutePath());
         Image imagemRedimensionada = iconOriginal.getImage()

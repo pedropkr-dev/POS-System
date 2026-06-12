@@ -1,5 +1,6 @@
 package com.pointofsale.view;
 
+import com.pointofsale.model.Produto;
 import com.pointofsale.view.product.PainelListarProdutos;
 import com.pointofsale.view.product.PainelCadastroProduto;
 import com.pointofsale.view.sale.PainelNovaVenda;
@@ -10,17 +11,14 @@ import com.pointofsale.model.Venda;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class TelaPrincipal extends JFrame {
 
-
     private CardLayout baralho;
-
     private JPanel painelCartas;
-
 
     private PainelListarProdutos painelListarProdutos;
     private PainelListarVendas painelListarVendas;
+    private PainelCadastroProduto painelCadastroProduto;
 
     public TelaPrincipal() {
         setTitle("Sistema POS");
@@ -28,11 +26,8 @@ public class TelaPrincipal extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         baralho = new CardLayout();
         painelCartas = new JPanel(baralho);
-
-
 
         JPanel menu = criarMenu();
         painelCartas.add(menu, "MENU");
@@ -40,7 +35,8 @@ public class TelaPrincipal extends JFrame {
         painelListarProdutos = new PainelListarProdutos(this);
         painelCartas.add(painelListarProdutos, "LISTAR_PRODUTOS");
 
-        painelCartas.add(new PainelCadastroProduto(this), "CADASTRO_PRODUTO");
+        painelCadastroProduto = new PainelCadastroProduto(this);
+        painelCartas.add(painelCadastroProduto, "CADASTRO_PRODUTO");
 
         painelCartas.add(new PainelNovaVenda(this), "NOVA_VENDA");
 
@@ -52,16 +48,23 @@ public class TelaPrincipal extends JFrame {
         mostrarTela("MENU");
     }
 
-
     public void mostrarTela(String nome) {
+        if (nome.equals("CADASTRO_PRODUTO")) {
+            painelCadastroProduto.limparCampos();
+        }
+        
         baralho.show(painelCartas, nome);
-
 
         if (nome.equals("LISTAR_PRODUTOS")) {
             painelListarProdutos.recarregar();
         } else if (nome.equals("LISTAR_VENDAS")) {
             painelListarVendas.recarregar();
         }
+    }
+
+    public void mostrarTelaCadastroProduto(Produto produto) {
+        painelCadastroProduto.carregarDadosParaEdicao(produto);
+        baralho.show(painelCartas, "CADASTRO_PRODUTO");
     }
 
     public void mostrarDetalheVenda(Venda venda) {
@@ -100,5 +103,4 @@ public class TelaPrincipal extends JFrame {
 
         return painel;
     }
-
 }

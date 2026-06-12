@@ -1,5 +1,6 @@
 package com.pointofsale.view.product;
 
+import com.pointofsale.model.Produto;
 import com.pointofsale.service.ProdutoService;
 import com.pointofsale.view.TelaPrincipal;
 
@@ -18,9 +19,11 @@ public class PainelCadastroProduto extends JPanel {
     private JTextField campoNome;
     private JTextField campoValor;
     private JTextField campoImagem;
+    private JButton botaoEscolher;
     private TelaPrincipal principal;
 
     private File arquivoImagemEscolhido;
+    private Produto produtoEmEdicao;
 
     public PainelCadastroProduto(TelaPrincipal principal) {
         this.principal = principal;
@@ -60,7 +63,7 @@ public class PainelCadastroProduto extends JPanel {
         campoImagem.setEditable(false);
         add(campoImagem);
 
-        JButton botaoEscolher = new JButton("Escolher...");
+        botaoEscolher = new JButton("Escolher...");
         botaoEscolher.setBounds(325, 170, 75, 25);
         add(botaoEscolher);
         botaoEscolher.addActionListener(e -> escolherImagem());
@@ -70,12 +73,12 @@ public class PainelCadastroProduto extends JPanel {
         add(botaoSalvar);
         botaoSalvar.addActionListener(e -> salvarProduto());
 
-        JButton botaoVoltar = new JButton("← Menu");
+        JButton botaoVoltar = new JButton("← Voltar");
         botaoVoltar.setBounds(520, 440, 120, 35);
         add(botaoVoltar);
         botaoVoltar.addActionListener(e -> {
             limparCampos();
-            principal.mostrarTela("MENU");
+            principal.mostrarTela("LISTAR_PRODUTOS");
         });
     }
 
@@ -88,9 +91,7 @@ public class PainelCadastroProduto extends JPanel {
 
         int resultado = seletor.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
-
             arquivoImagemEscolhido = seletor.getSelectedFile();
-
             campoImagem.setText(arquivoImagemEscolhido.getName());
         }
     }
@@ -99,57 +100,61 @@ public class PainelCadastroProduto extends JPanel {
         try {
             String codigo = campoCodigo.getText();
             String nome = campoNome.getText();
-            String imagem = campoImagem.getText();
             BigDecimal valor = new BigDecimal(campoValor.getText().trim());
 
-
-            if (arquivoImagemEscolhido != null) {
-                copiarImagemParaPasta(arquivoImagemEscolhido);
+            if (produtoEmEdicao != null) { // Modo de Alteração
+                ProdutoService.atualizarProduto(produtoEmEdicao.getCodigoBarras(), nome, valor);
+                JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
+            } else { // Modo de Cadastro
+                String imagem = campoImagem.getText();
+                if (arquivoImagemEscolhido != null) {
+                    copiarImagemParaPasta(arquivoImagemEscolhido);
+                }
+                ProdutoService.cadastrarProduto(codigo, nome, valor, imagem);
+                JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
             }
 
-            ProdutoService.cadastrarProduto(codigo, nome, valor, imagem);
-
-            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
             limparCampos();
             principal.mostrarTela("LISTAR_PRODUTOS");
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Valor inválido. Use números, ex: 8.99",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Valor inválido. Use números, ex: 8.99", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-
     private void copiarImagemParaPasta(File origem) {
         try {
-
             File pastaImagens = new File("dados/imagens");
             if (!pastaImagens.exists()) {
                 pastaImagens.mkdirs();
             }
-
-
             Path destino = new File(pastaImagens, origem.getName()).toPath();
-
             Files.copy(origem.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
-
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Não foi possível copiar a imagem: " + e.getMessage(),
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Não foi possível copiar a imagem: " + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
 
-    private void limparCampos() {
+    public void carregarDadosParaEdicao(Produto produto) {
+        this.produtoEmEdicao = produto;
+        campoCodigo.setText(produto.getCodigoBarras());
+        campoCodigo.setEditable(false);
+        campoNome.setText(produto.getNome());
+        campoValor.setText(produto.getValor().toString());
+        campoImagem.setText(produto.getLinkImagem());
+        botaoEscolher.setEnabled(false);
+    }
+
+    public void limparCampos() {
         campoCodigo.setText("");
+        campoCodigo.setEditable(true);
         campoNome.setText("");
         campoValor.setText("");
         campoImagem.setText("");
         arquivoImagemEscolhido = null;
+        produtoEmEdicao = null;
+        botaoEscolher.setEnabled(true);
     }
 }

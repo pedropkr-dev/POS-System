@@ -101,7 +101,7 @@ public class PainelNovaVenda extends JPanel {
         comboPagamento.setBounds(120, 400, 200, 25);
         add(comboPagamento);
 
-        botaoConcluir = new JButton("Concluir Venda");
+        botaoConcluir = new JButton("Concluir");
         botaoConcluir.setBounds(355, 400, 180, 40);
         add(botaoConcluir);
         botaoConcluir.addActionListener(e -> concluirVenda());

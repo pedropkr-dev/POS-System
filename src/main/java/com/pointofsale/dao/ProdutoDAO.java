@@ -78,4 +78,20 @@ public class ProdutoDAO {
 
         return null;
     }
+
+    public static void atualizarProdutos(List<Produto> produtos) {
+        File arquivo = new File("dados/produtos.csv");
+        try (FileWriter writer = new FileWriter(arquivo, false)) {
+            for (Produto p : produtos) {
+                String linhaCSV = p.getCodigoBarras() + ";" +
+                                  p.getNome() + ";" +
+                                  p.getValor() + ";" +
+                                  p.getLinkImagem() + "\n";
+                writer.write(linhaCSV);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao atualizar o arquivo de produtos.");
+            e.printStackTrace();
+        }
+    }
 }
