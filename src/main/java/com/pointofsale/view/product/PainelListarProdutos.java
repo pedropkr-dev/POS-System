@@ -70,11 +70,6 @@ public class PainelListarProdutos extends JPanel {
         add(botaoAlterar);
         botaoAlterar.addActionListener(e -> alterarProduto());
 
-        JButton botaoAtualizar = new JButton("Atualizar");
-        botaoAtualizar.setBounds(280, 440, 120, 35);
-        add(botaoAtualizar);
-        botaoAtualizar.addActionListener(e -> recarregar());
-
         JButton botaoVoltar = new JButton("← Menu");
         botaoVoltar.setBounds(520, 440, 120, 35);
         add(botaoVoltar);

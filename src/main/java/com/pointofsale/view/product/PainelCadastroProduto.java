@@ -102,10 +102,10 @@ public class PainelCadastroProduto extends JPanel {
             String nome = campoNome.getText();
             BigDecimal valor = new BigDecimal(campoValor.getText().trim());
 
-            if (produtoEmEdicao != null) { // Modo de Alteração
+            if (produtoEmEdicao != null) {
                 ProdutoService.atualizarProduto(produtoEmEdicao.getCodigoBarras(), nome, valor);
                 JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
-            } else { // Modo de Cadastro
+            } else {
                 String imagem = campoImagem.getText();
                 if (arquivoImagemEscolhido != null) {
                     copiarImagemParaPasta(arquivoImagemEscolhido);

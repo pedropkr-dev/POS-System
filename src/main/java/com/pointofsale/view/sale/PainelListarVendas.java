@@ -16,7 +16,6 @@ public class PainelListarVendas extends JPanel {
     private List<Venda> vendas;
     private TelaPrincipal principal;
 
-    // Molde de formatação da data: dia/mês/ano hora:minuto
     private static final DateTimeFormatter FORMATO_DATA =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -46,11 +45,6 @@ public class PainelListarVendas extends JPanel {
         botaoDetalhe.setBounds(20, 440, 140, 35);
         add(botaoDetalhe);
         botaoDetalhe.addActionListener(e -> abrirDetalhe());
-
-        JButton botaoAtualizar = new JButton("Atualizar");
-        botaoAtualizar.setBounds(170, 440, 120, 35);
-        add(botaoAtualizar);
-        botaoAtualizar.addActionListener(e -> recarregar());
 
         JButton botaoVoltar = new JButton("← Menu");
         botaoVoltar.setBounds(520, 440, 120, 35);

@@ -38,7 +38,6 @@ public class PainelNovaVenda extends JPanel {
         this.principal = principal;
         setLayout(null);
 
-        // --- Linha 1: CPF e Controle da Venda ---
         JLabel labelCpf = new JLabel("CPF do Cliente:");
         labelCpf.setBounds(20, 15, 120, 25);
         add(labelCpf);
@@ -56,7 +55,6 @@ public class PainelNovaVenda extends JPanel {
         add(botaoCancelarVenda);
         botaoCancelarVenda.addActionListener(e -> limparVenda());
 
-        // --- Linha 2: Adicionar Itens ---
         JLabel labelCodigo = new JLabel("Código de Barras:");
         labelCodigo.setBounds(20, 50, 120, 25);
         add(labelCodigo);
@@ -76,7 +74,6 @@ public class PainelNovaVenda extends JPanel {
         add(botaoAdicionar);
         botaoAdicionar.addActionListener(e -> adicionarItem());
 
-        // --- Tabela de Itens ---
         modelo = new DefaultTableModel(new Object[][]{}, new String[]{"Código", "Produto", "Qtd", "Subtotal"}) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -88,7 +85,6 @@ public class PainelNovaVenda extends JPanel {
         scroll.setBounds(20, 90, 630, 250);
         add(scroll);
 
-        // --- Rodapé: Total e Ações Finais ---
         labelTotal = new JLabel("Total: R$ 0.00");
         labelTotal.setBounds(20, 350, 300, 30);
         labelTotal.setFont(labelTotal.getFont().deriveFont(18f));
@@ -114,7 +110,6 @@ public class PainelNovaVenda extends JPanel {
             principal.mostrarTela("MENU");
         });
 
-        // Inicia a tela no estado bloqueado
         setComponentesVendaAtivos(false);
     }
 
@@ -149,7 +144,7 @@ public class PainelNovaVenda extends JPanel {
                     ClienteService.cadastrarNovoCliente(cpf);
                     clienteAtual = ClienteDAO.buscarPorCpf(cpf);
                 } else {
-                    return; // Aborta se o usuário não quiser cadastrar
+                    return;
                 }
             }
             
@@ -166,7 +161,7 @@ public class PainelNovaVenda extends JPanel {
     }
 
     private void adicionarItem() {
-        // (O código deste método permanece o mesmo)
+
         String codigo = campoCodigo.getText().trim();
         if (codigo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite um código de barras.");
