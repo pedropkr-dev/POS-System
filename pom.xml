@@ -10,38 +10,13 @@
     <packaging>jar</packaging>
 
     <name>POS System</name>
-    <description>Point of Sale Desktop System - Final Activity</description>
+    <description>Point of Sale System</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.17.2</jackson.version>
     </properties>
-
-    <dependencies>
-        <!-- Jackson: JSON serialization/deserialization -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <!-- Support for LocalDate, LocalDateTime (sale dates) -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <!-- JUnit 5 for tests (optional but recommended) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.10.3</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <finalName>pos-system</finalName>
@@ -52,9 +27,6 @@
                 <version>3.13.0</version>
             </plugin>
 
-            <!-- Generates an executable JAR with all dependencies bundled:
-                 mvn clean package
-                 java -jar target/pos-system.jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

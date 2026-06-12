@@ -20,6 +20,11 @@ public class VendaDAO {
     public static void salvarVenda(Venda venda) {
         File arquivo = new File("dados/venda.csv");
 
+        File pasta = new File("dados");
+        if (!pasta.exists()) {
+            pasta.mkdirs();
+        }
+
         try (FileWriter writer = new FileWriter(arquivo, true)) {
 
             String itensFormatados = "[";
@@ -37,16 +42,14 @@ public class VendaDAO {
 
             writer.write(linhaCSV);
         } catch (IOException e) {
-            System.out.println("Erro. Não foi possível acessa a venda.");
+            System.out.println("Erro. Não foi possível acessar a venda.");
         }
-
     }
 
     public static List<Venda> listarVendas() {
         List<Venda> historicoVendas = new ArrayList<>();
 
         try {
-            // Leitura de Alta Velocidade (NIO.2)
             List<String> linhas = Files.readAllLines(Paths.get("dados/venda.csv"));
 
             for (String linha : linhas) {
@@ -54,7 +57,7 @@ public class VendaDAO {
                     continue;
                 }
 
-                String[] fatias = linha.split(";");
+                String[] fatias = linha.split(";", -1);
 
                 long idVenda = Long.parseLong(fatias[0]);
                 long cpfCliente = Long.parseLong(fatias[1]);
@@ -63,7 +66,6 @@ public class VendaDAO {
                 BigDecimal total = new BigDecimal(fatias[4]);
                 String itensFormatados = fatias[5];
 
-                // Busca o cliente cruzando com o ClienteDAO
                 Cliente cliente = ClienteDAO.buscarPorCpf(cpfCliente);
 
                 List<ProdutoVenda> listaDeProdutos = new ArrayList<>();
