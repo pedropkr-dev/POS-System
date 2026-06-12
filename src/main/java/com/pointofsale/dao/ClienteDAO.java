@@ -15,10 +15,17 @@ public class ClienteDAO {
     public static void salvarCliente(Cliente cliente) {
         File arquivo = new File("dados/clientes.csv");
 
+        File pasta = new File("dados");
+        if (!pasta.exists()) {
+            pasta.mkdirs();
+        }
+
         try (FileWriter writer = new FileWriter(arquivo, true)) {
 
             String linhasCSV = cliente.getId_cliente() + ";" +
-                               cliente.getCpf() + "\n";
+                    cliente.getCpf() + "\n";
+
+            writer.write(linhasCSV);
 
         } catch (IOException e){
             System.out.println("Erro. Não foi possível acessar o cliente.");
@@ -38,7 +45,7 @@ public class ClienteDAO {
                     continue;
                 }
 
-                String[] fatias = linha.split(";");
+                String[] fatias = linha.split(";", -1);
 
                 Long id_cliente = Long.valueOf(fatias[0]);
                 Long cpf = Long.valueOf(fatias[1]);
@@ -49,13 +56,10 @@ public class ClienteDAO {
             }
 
         } catch (IOException e) {
-
             System.out.println("Erro. Nenhum cliente encontrado.");
-
         }
 
         return catalogo;
-
     }
 
     public static Cliente buscarPorCpf(long cpfBuscado) {
@@ -78,5 +82,4 @@ public class ClienteDAO {
         Cliente ultimoCliente = clientes.get(clientes.size() - 1);
         return ultimoCliente.getId_cliente() + 1;
     }
-
 }
