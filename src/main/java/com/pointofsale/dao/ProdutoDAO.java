@@ -16,19 +16,23 @@ public class ProdutoDAO {
     public static void salvarProduto(Produto produto) {
         File arquivo = new File("dados/produtos.csv");
 
+        File pasta = new File("dados");
+        if (!pasta.exists()) {
+            pasta.mkdirs();
+        }
+
         try (FileWriter writer = new FileWriter(arquivo, true)) {
 
             String linhaCSV = produto.getCodigoBarras() + ";" +
-                              produto.getNome() + ";" +
-                              produto.getValor() + ";" +
-                              produto.getLinkImagem() + "\n";
+                    produto.getNome() + ";" +
+                    produto.getValor() + ";" +
+                    produto.getLinkImagem() + "\n";
 
             writer.write(linhaCSV);
 
         } catch (IOException e) {
             System.out.println("Erro. Não foi possível acessar o produto.");
             e.printStackTrace();
-
         }
     }
 
@@ -44,12 +48,12 @@ public class ProdutoDAO {
                     continue;
                 }
 
-                String[] fatias = linha.split(";");
+                String[] fatias = linha.split(";", -1);
 
                 String codigo = fatias[0];
                 String nome = fatias[1];
                 BigDecimal preco = new BigDecimal(fatias[2]);
-                String linkImagem = fatias[3];
+                String linkImagem = (fatias.length > 3) ? fatias[3] : "";
 
                 Produto p = new Produto(codigo, nome, preco, linkImagem);
 
@@ -57,9 +61,7 @@ public class ProdutoDAO {
             }
 
         } catch (IOException e) {
-
             System.out.println("Erro. Nenhum produto encontrado.");
-
         }
 
         return catalogo;
